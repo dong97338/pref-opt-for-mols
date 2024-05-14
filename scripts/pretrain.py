@@ -40,8 +40,9 @@ def train(model, config, train_loader, test_loader=None):
         logger = None
 
     # log configs
-    for key, value in config.items():
-        logger.experiment[f"config/{key}"].log(value)
+    if logger is not None:
+        for key, value in config.items():
+            logger.experiment[f"config/{key}"].log(value)
 
     checkpoint_callback = ModelCheckpoint(
         dirpath=config.get("model_path"),
@@ -69,6 +70,7 @@ def train(model, config, train_loader, test_loader=None):
 
     trainer.fit(model, train_loader, test_loader)
     return model, logger
+
 
 
 def load_moses(split="train"):
