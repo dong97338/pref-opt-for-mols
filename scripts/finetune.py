@@ -7,7 +7,7 @@ import pandas as pd
 import neptune
 from sklearn.model_selection import train_test_split
 from neptune_pytorch import NeptuneLogger
-from pref_opt_for_mols.models import GPT, CharRNN, DPO
+from pref_opt_for_mols.models import GPT, CharRNN, DPO, SAFEDoubleHeadsModel
 from pref_opt_for_mols.dataset import PreferencePairDataset
 
 
@@ -114,6 +114,8 @@ if __name__ == "__main__":
         model_cls = GPT
     elif config["arch"] == "rnn":
         model_cls = CharRNN
+    elif config["arch"] == "safegpt":
+        model_cls = SAFEDoubleHeadsModel
     else:
         raise ValueError(f"Unrecognized model '{args.arch}'")
 
